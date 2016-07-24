@@ -2,11 +2,11 @@
 
 **CoderTicket** is a Ruby on Rails blog application that allows users to create and buy tickets to cool events. 
 
-Submitted by: **Your Name Here**
+Submitted by: **Huy Ngoc Hoang**
 
-Time spent: **X** hours
+Time spent: **20** hours
 
-URL: **Insert your Heroku URL here**
+URL: **http://coderticket-hoang.herokuapp.com/**
 
 SimpleCov Test Coverage: **Insert percentage or link to report here**
 
@@ -60,10 +60,15 @@ The following **required** functionality is complete:
 ## Notes
 
 Describe any challenges encountered while building the app.
+* Cannot figure out how to write test for view
+* Haven't setup SimpleCov test yet.
+
+## Walkthrought
+![CoderTicket](coderticket-demo.gif)
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2016] [Huy Hoang]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

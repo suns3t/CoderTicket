@@ -23,7 +23,7 @@ class OrderController < ApplicationController
                     @list_of_order_ids.append(@order.id)
 
                     # Reduce quantity of max_quantity in ticket_type
-                    ticket_type.max_quantity = ticket_type.max_quantity - quantity - 1
+                    ticket_type.max_quantity = ticket_type.max_quantity - quantity
                     if ticket_type.save
                         j = j + 1
                     else
