@@ -9,6 +9,7 @@ class CreateEvents < ActiveRecord::Migration
       t.references :category, index: true, foreign_key: true
       t.string :name
       t.string :published_at
+      
       t.timestamps null: false
     end
   end
