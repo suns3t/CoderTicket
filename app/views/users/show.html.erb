@@ -1,0 +1,23 @@
+<div class="container">
+    <h4>User profile</h4>
+
+    <ul>
+        <li >
+            Name: <%= @user.name %>
+        </li>
+        <li>
+            Email: <%= @user.email %>
+        </li>
+
+    </ul>
+    
+</div>
+
+<div class="events-list">
+    <h4>Events that you created</h4>
+    <div class="row">
+        <% @events.each do |event| %>
+        <%= render partial: 'events/card', locals: {event: event} %>
+        <% end %>
+    </div>
+</div>

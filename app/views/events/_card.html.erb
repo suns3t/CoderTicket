@@ -1,12 +1,18 @@
 <div class="col-md-6">
   <%= link_to event_path(event) do %>
-    <div class="card">
-      <img class="card-img-top" src="<%= event.hero_image_url %>">
-      <div class="card-block">
-        <h4 class="card-title"><%= event.name %></h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-        </p>
-      </div>
+  <div class="card">
+    <img class="card-img-top" src="<%= event.hero_image_url %>" style="min-width: 100%; max-height: 180px">
+    <div class="card-block">
+      <h4 class="card-title"><%= event.name %></h4>
+
+      <p class="card-text">
+        <%= render partial: "events/time_display", locals: {time_value: event.starts_at} %>
+        <%= render partial: "venues/venue", locals: {venue: event.venue} %>
+      </p>
+      <% if is_event_owner(event.id) %>
+        <a href="<%= edit_event_path(event.id) %>" class="btn btn-primary-outline">Edit Event</a>
+      <% end %>
     </div>
+  </div>
   <% end %>
 </div>  

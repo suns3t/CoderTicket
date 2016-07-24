@@ -1,0 +1,25 @@
+<div class="container">
+    <h2>Venues</h2>
+
+    <ul id="venues" class="list-group">
+        <%= render @venues %>
+    </ul>
+
+    <br>
+
+    <%= form_for(@venue, url: user_venues_path(user_id: current_user.id), remote: true) do |f| %>
+        <div class="form-group">
+            <%= f.label :name %>:
+            <%= f.text_field :name, class: "form-control" %>
+        </div>
+        <div class="form-group">
+            <%= f.label :full_address %>:
+            <%= f.text_field :full_address, class: "form-control" %>
+        </div>
+        <div class="form-group">
+            <%= f.label :region_id, "Region" %>:
+            <%= f.select :region_id, options_from_collection_for_select(@regions, "id", "name"), class: "form-control" %>
+        </div>
+        <%= f.submit "Create Venue", class: "btn btn-primary" %>
+    <% end %>
+</div>

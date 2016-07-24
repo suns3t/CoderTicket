@@ -1,3 +1,9 @@
+<% if is_not_published(@event.id) && is_event_owner(@event.id) %>
+<div class="container text-center">
+  
+  <h4>This event is not yet published. <%= link_to 'Publish Event', event_path, method: :post, class: "btn btn-primary-outline" %></h4>
+</div>
+<% end %>
 <div class="container-fluid no-pad events-detail">
   <div class="row no-pad">
     <div class="col-md-3 sidebar">
@@ -8,19 +14,19 @@
       <h1> Hot Events </h1>
       <div class="ticket-list">
         <% @event.ticket_types.each do |ticket_type| %>
-          <div class="row">
-            <div class="col-md-6">
-              <%= ticket_type.name %>
-            </div>
-
-            <div class="col-md-6 price text-right">
-              <%= number_to_currency(ticket_type.price, unit: 'VND', precision: 0) %>
-            </div>
+        <div class="row">
+          <div class="col-md-6">
+            <%= ticket_type.name %>
           </div>
-          <div class="clearfix"></div>
+
+          <div class="col-md-6 price text-right">
+            <%= number_to_currency(ticket_type.price, unit: 'VND', precision: 0) %>
+          </div>
+        </div>
+        <div class="clearfix"></div>
         <% end %>
         <%= link_to new_event_ticket_path(@event) do %>
-          <button class='btn btn-lg btn-block btn-danger'> BOOK NOW </button>
+        <button class='btn btn-lg btn-block btn-danger'> BOOK NOW </button>
         <% end %>
       </div>
     </div>
@@ -28,24 +34,8 @@
       <div class="hero-img hidden-sm-down" style="background-image: url(<%= @event.hero_image_url %>); background-size: cover;"> </div>
       <div class="container">
         <h3> <%= @event.name %> </h3>
-        <div class="pull-left">
-          <%= fa_icon 'clock-o' %>
-        </div>
-        <div class="time-details"> 
-          <%= @event.starts_at.strftime('%A, %d %b %Y %l:%M %p') %> 
-        </div>
-
-        
-
-        <div class="pull-left">
-          <%= fa_icon 'map-marker' %>
-        </div>
-        <div class="venue-details">
-         <%= @event.venue.name %>
-         <br/>
-         <%= @event.venue.full_address %>
-        </div>
-
+        <%= render partial: "events/time_display", locals: {time_value: @event.starts_at} %>
+        <%= render partial: "venues/venue", locals: {venue: @event.venue} %>
         <div class="img-spacer">
           <%= image_tag 'shadow-top.png' %>
         </div>

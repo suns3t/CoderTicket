@@ -1,10 +1,27 @@
 Rails.application.routes.draw do
-  resources :users
+  post 'order/create'
+
+  resources :users do
+    resources :venues
+    resources :events
+    resources :tickets
+  end 
   root 'events#index'
 
   resources :events do
     resources :tickets
   end
+
+  # Event publish
+  post "events/:id" => "events#publish"
+  
+  # Session routes
+  get "login" => 'sessions#new'
+  get 'auth/:provider/callback' => 'sessions#callback'
+
+  post 'sessions/create'
+
+  delete "destroy" => 'sessions#destroy'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,13 @@
+<tr id="<%= type.id %>">
+  <td> <%= type.name %> - Available: <%= type.max_quantity %></td>
+  <td> <%= number_to_currency(type.price, unit: 'VND ', precision: 0) %> </td>
+  <% if type.max_quantity > 10 %>
+    <td> <%= select_tag(type.id, options_for_select(0..10)) %></td> 
+  <% else %>
+    <% if type.max_quantity > 0 %>
+        <td> <%= select_tag(type.id, options_for_select(0..type.max_quantity)) %></td>
+    <% else %>
+        <td> Sold out! </td>
+    <% end %>
+  <% end %>
+</tr>

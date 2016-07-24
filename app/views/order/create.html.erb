@@ -1,0 +1,38 @@
+<div class="container-fluid tickets-buy">
+  <div class="row tickets-header">
+    <div class="col-xs-12 col-md-11 col-md-offset-1">
+      <h3> <%= @event.name %> </h3>
+      <div class="pull-left">
+        <%= fa_icon 'map-marker' %>
+      </div>
+      <div class="venue-details">
+       <%= @event.venue.name %>
+       <br/>
+       <%= @event.venue.full_address %>
+     </div>
+
+     <div class="pull-left">
+      <%= fa_icon 'clock-o' %>
+    </div>
+    <div class="time-details"> 
+      <%= @event.starts_at.strftime('%A, %d %b %Y %l:%M %p') %> 
+    </div>
+  </div>
+</div>
+
+<% if @orders.count > 0 %>
+<div class="row">
+  <div class="col-md-11 col-md-offset-1">
+    <h3>Your order summary</h3>
+    <p>Thank you for order from us. Your order is created successfully</p>
+    <table class="table" id="ticket-table">
+      <th> Ticket Type </th>
+      <th> Unit Price </th>
+      <th> Quantity </th>
+      <% @orders.each do |order| %>
+        <%= render partial: "order", locals: {type: TicketType.find(order.ticket_type_id), quantity: order.quantity} %>
+      <% end %> 
+    </table>
+  </div>
+</div>
+<% end %>

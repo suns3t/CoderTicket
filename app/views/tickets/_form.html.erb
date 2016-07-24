@@ -1,0 +1,15 @@
+<%= form_for(ticket_type, url: event_tickets_path(event_id: event.id), remote: true) do |f| %>
+<div class="form-group">
+    <%= f.label :name %>:
+    <%= f.text_field :name, class: "form-control" %>
+</div>
+<div class="form-group">
+    <%= f.label :price %>:
+    <%= f.number_field :price, min:1000, step:1000, class: "form-control" %>
+</div>
+<div class="form-group">
+    <%= f.label :max_quantity, "Max Quantity of this ticket type" %>:
+    <%= f.number_field :max_quantity, min:1, step:1, class: "form-control" %>
+</div>
+<%= f.submit "Create Ticket Type", class: "btn btn-primary" %>
+<% end %>

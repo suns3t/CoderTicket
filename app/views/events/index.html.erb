@@ -1,18 +1,22 @@
 <div class='events-header' style='background-image: url(<%= header_background_image_url %>)'>
   <div class="container">
     <h2> Discover upcoming events </h2>
-    <form>
-      <input type="text" class="form-control" name="search" placeholder="Search for events, shows, courses...">
-    </form>
-  </div>
-</div>
-<div class="container-fluid events-list">
-    <% @events.in_groups_of(3) do |g| %>
-      <div class="row">
-        <% g.compact.each do |e| %>
-            <%= render partial: 'card', locals: {event: e} %>
-        <% end %>
-      </div>  
+    <%= form_tag events_path, :method => 'get' do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search for events, shows, courses...", class: "form-control" %>
     <% end %>
   </div>
 </div>
+<% if @events.count > 0 %>
+<div class="container-fluid events-list">
+  <% @events.in_groups_of(2) do |g| %>
+  <div class="row">
+    <% g.compact.each do |e| %>
+    <%= render partial: 'card', locals: {event: e} %>
+    <% end %>
+  </div>  
+  <% end %>
+</div>
+</div>
+<% else %>
+<p class="container-fluid text-center">No upcoming events availabel now. Stay tune!</p>
+<% end %>

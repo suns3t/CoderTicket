@@ -9,39 +9,63 @@
        <%= @event.venue.name %>
        <br/>
        <%= @event.venue.full_address %>
-      </div>
+     </div>
 
-      <div class="pull-left">
-        <%= fa_icon 'clock-o' %>
-      </div>
-      <div class="time-details"> 
-        <%= @event.starts_at.strftime('%A, %d %b %Y %l:%M %p') %> 
-      </div>
-
-
+     <div class="pull-left">
+      <%= fa_icon 'clock-o' %>
+    </div>
+    <div class="time-details"> 
+      <%= @event.starts_at.strftime('%A, %d %b %Y %l:%M %p') %> 
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-11 col-md-offset-1">  
-      <table class="table">
-        <th> Ticket Type </th>
-        <th> Unit Price </th>
-        <th> Quantity </th>
-      
-        <% @event.ticket_types.each do |type| %>
-        <tr>
-          <td> <%= type.name %> </td>
-          <td> <%= number_to_currency(type.price, unit: 'VND ', precision: 0) %> </td>
-          <td> <%= select_tag('quantity', options_for_select(0..10)) %></td> 
-        </tr>
-        <% end %> 
-      </table>
-    </div>
+</div>
+
+<% if is_event_owner(@event.id) %>
+<div class="row">
+  <div class="col-md-11 col-md-offset-1">
+    <table class="table" id="ticket-table">
+      <th> Ticket Type </th>
+      <th> Unit Price </th>
+      <th> Quantity </th>
+      <% @event.ticket_types.each do |ticket_type| %>
+      <%= render partial: "ticket", locals: {type: ticket_type} %>
+      <% end %> 
+    </table>
+    <!-- New form to add ticket types -->
+    <h4>Add in Ticket Type for this event <b><%= @event.name %></b></h4>
+    <%= render partial: "form", locals: {event: @event, ticket_type: TicketType.new} %>
+    <hr/>
+    <a href="<%= event_path(@event.id) %>" class="btn btn-primary-outline">Preview & Publish Event</a>
   </div>
-  <div class="row">
-    <div class="col-md-2 col-md-offset-5">
-      <button class="btn btn-success btn-lg btn-block"> Buy </button>
+</div>
+
+<% else %>
+
+<!-- Show buy button only for customer/not event owner -->
+<%= form_tag order_create_path(id: @event.id), method: :post do %>
+<div class="row">
+  <div class="col-md-11 col-md-offset-1">
+    <table class="table" id="ticket-table">
+      <th> Ticket Type </th>
+      <th> Unit Price </th>
+      <th> Quantity </th>
+      <% @event.ticket_types.each do |ticket_type| %>
+      <%= render partial: "ticket", locals: {type: ticket_type} %>
+      <% end %> 
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="text-center">
+    <% if signed_in %>
+    <%= submit_tag 'Buy Tickets', class:  "btn btn-success btn-lg", method: :post %>
+    <% else %>
+    <div class="alert alert-success" role="alert">
+      <strong>Want to buy tickets!</strong> Let's sign in.
     </div>
-  <div>
-</div>  
+    <% end %>
+  </div>
+</div>
+<% end %>
+<% end %>
 

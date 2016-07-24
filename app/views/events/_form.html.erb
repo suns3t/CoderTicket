@@ -1,0 +1,43 @@
+<%= form_for @event do |f|%>
+<% if @event.errors.any? %>
+<div class="alert alert-warning alert-dismissible" id="error_explanation">
+  <h5><%= pluralize(@event.errors.count, "error") %> prohibited this article from being saved:</h5>
+
+  <ul>
+      <% @event.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="form-group">
+    <%= f.label :name %>:
+    <%= f.text_field :name, class: "form-control", required: true %>
+</div>
+<div class="form-group">
+    <%= f.label :starts_at %>:
+    <%= f.datetime_select :starts_at, min: Date.today, :minute_step => 15, class: "form-control", required: true %>
+</div>
+<div class="form-group">
+    <%= f.label :ends_at %>:
+    <%= f.datetime_select :ends_at, min: Date.today, :minute_step => 15, class: "form-control" %>
+</div>
+<div class="form-group">
+    <%= f.label :venue_id, "Location" %>:
+    <%= f.select :venue_id, options_from_collection_for_select(Venue.all, "id", "name", @event.venue_id), class: "form-control" %>
+</div>
+<div class="form-group">
+    <%= f.label :category_id, "Location" %>:
+    <%= f.select :category_id, options_from_collection_for_select(Category.all, "id", "name", @event.category_id), class: "form-control" %>
+</div>
+<div class="form-group">
+    <%= f.label :hero_image_url %>:
+    <%= f.text_field :hero_image_url, class: "form-control", required: true %>
+</div>
+<div class="form-group">
+    <%= f.label :extended_html_description %>:
+    <%= f.text_area :extended_html_description, class: "form-control", required: true %>
+</div>
+
+<%= f.submit "Save Event & Go to Create Tickets", class: "btn btn-primary" %>
+<% end %>
